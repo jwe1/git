@@ -1,0 +1,120 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>小区租售</h2>
+	</div>
+<div class="cf">
+	<div class="cf">
+		<a class="btn" href="{:U('add')}">新 增</a>
+		<a class="btn ajax-post confirm" url="{:U('setStatus','status=1')}" target-form="ids">启 用</a>
+		<a class="btn ajax-post confirm" url="{:U('setStatus','status=0')}" target-form="ids">禁 用</a>
+		<a class="btn ajax-post confirm" url="{:U('setStatus','status=-1')}" target-form="ids">删 除</a>
+	</div>
+
+
+	<!-- 高级搜索 -->
+	<div class="search-form fr cf">
+		<div class="sleft">
+			<input type="text" name="keywords" class="search-input" value="<?=isset($_GET['keywords'])?$_GET['keywords']:''?>" placeholder="请输入发布人姓名或标题">
+			<a class="sch-btn" href="javascript:;" id="search" url="/admin.php/Sale/index.html"><i class="btn-search"></i></a>
+		</div>
+	</div>
+</div>
+
+	<div class="data-table table-striped">
+		<table>
+			<thead>
+				<tr>
+					<th class="row-selected">
+						<input class="checkbox check-all" type="checkbox">
+					</th>
+					<th>ID</th>
+					<th>发布人</th>
+					<th>发布人电话</th>
+                    <th>标题</th>
+					<th>价格</th>
+					<th>发布时间</th>
+					<th>截止时间</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<notempty name="list">
+				<volist name="list" id="sale">
+					<tr>
+						<td><input class="ids row-selected" type="checkbox" name="" id="" value="{$sale['id']}"> </td>
+						<td>{$sale.id}</td>
+						<td>{$sale.username}</td>
+						<td>{$sale.tel}</td>
+                        <td>{$sale.title}</td>
+						<td>￥{$sale.price} <?php echo $sale['danwei'] ? '元/月' :'万/月'?></td>
+						<td><?php echo date('Y-m-d h:i',$sale['create_time'])?></td>
+						<td><?php echo date('Y-m-d',$sale['end_time'])?></td>
+						<td><?php echo $sale['type'] ? '出租' :'销售'?></td>
+						<td>
+							<a class="text-info" title="编辑" href="{:U('edit?id='.$sale['id'])}">编辑</a>
+							<a title="删除" href="{:U('del?id='.$sale['id'])}">删除</a>
+						</td>
+					</tr>
+				</volist>
+				<else/>
+				<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+			</tbody>
+		</table>
+	</div>
+</block>
+
+<block name="script">
+	<script src="/Public/static/thinkbox/jquery.thinkbox.js"></script>
+	<script type="text/javascript">
+        //搜索功能
+        $("#search").click(function(){
+            var url = $(this).attr('url');
+            var query  = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+            query = query.replace(/^&/g,'');
+            if( url.indexOf('?')>0 ){
+                url += '&' + query;
+            }else{
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function(e){
+            if(e.keyCode === 13){
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav('/admin.php/User/index.html');
+
+        //启用，禁用，删除，
+		$('.ajax-post:eq(0)').click(function(){/*启用*/
+		    tr = $('.row-selected:checked').closest('tr');
+		    ids =[];
+			tr.each(function(){
+				id = ($(this).find('td:eq(1)').text());
+                $.ajax({
+                    type:'POST',
+                    data:['id'+':'+id,'status:'+0],
+                    url: '__URL__/status.html	',
+                    async:true,
+                    dataType:'json',
+                    success:function(data){
+                        alert('成功发送')
+                    },
+                    error:function(){
+                        alert("没有成功发送")
+                    }
+
+                })
+            })
+
+		});
+	</script>
+</block>

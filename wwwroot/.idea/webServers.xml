@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ef90d480-3aa6-4b96-8bc2-483fa1c002f4" name="xiaoqu" url="http://120.77.80.205/">
+        <fileTransfer host="120.77.80.205" port="3306">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="3306" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
