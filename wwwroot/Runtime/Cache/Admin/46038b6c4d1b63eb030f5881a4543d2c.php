@@ -85,6 +85,8 @@
             
 
             
+	<script type="text/javascript" src="/Public/static/uploadify/jquery.uploadify.min.js"></script>
+
 	<div class="main-title">
 		<h2>
 			<?php echo ($info['id']?'新增':'修改'); ?>租售
@@ -125,6 +127,7 @@
 			<input type="file" id="upload_picture_path" >
 			<input type="hidden" name="path" id="cover_id_path"/>
 			<div class="upload-img-box">
+				<?=isset($info['path']) ? "<img src=".$info['path']." style='width:200px;'/>" : ''; ?>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -135,7 +138,7 @@
                 "swf": "/Public/static/uploadify/uploadify.swf",
                 "fileObjName": "download",
                 "buttonText": "上传图片",
-                "uploader": "/admin.php/File/uploadPicture/session_id/mc8chnu96gogutd44bsfb1vtd2.html",
+                "uploader": "/admin.php/File/uploadPicture/session_id/2kkft96sdnuhfldf052a5usfi5.html",
                 "width": 120,
                 'removeTimeout': 1,
                 'fileTypeExts': '*.jpg; *.png; *.gif;',
@@ -162,6 +165,7 @@
                 }
             }
 		</script>
+
 		<label class="item-label">内容<span class="check-tips"></span></label>
 		<div class="controls">
 			<label class="textarea">
@@ -285,7 +289,7 @@
     (function(){
         var ThinkPHP = window.Think = {
             "ROOT"   : "", //当前网站地址
-            "APP"    : "/admin.php?s=", //当前项目地址
+            "APP"    : "/index.php?s=", //当前项目地址
             "PUBLIC" : "/Public", //项目公共目录地址
             "DEEP"   : "<?php echo C('URL_PATHINFO_DEPR');?>", //PATHINFO分割符
             "MODEL"  : ["<?php echo C('URL_MODEL');?>", "<?php echo C('URL_CASE_INSENSITIVE');?>", "<?php echo C('URL_HTML_SUFFIX');?>"],

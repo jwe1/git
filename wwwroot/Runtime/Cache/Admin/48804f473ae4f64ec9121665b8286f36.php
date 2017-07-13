@@ -146,6 +146,9 @@
 		</table>
 	</div>
 
+	<div class="result page"><?php echo ($page); ?></div>
+
+
         </div>
         <div class="cont-ft">
             <div class="copyright">

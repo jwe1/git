@@ -1,0 +1,139 @@
+<extend name="Public/base"/>
+<!--<style type="text/css">
+	.hwh-page-info a{color: #CCC;}.hwh-page-info a em{font-style: normal;margin: 0 2px;}
+	.pagination li{float:left;border:1px solid red;}
+	.pagination li a{float:left}
+</style>-->
+
+<block name="body">
+	<div class="main-title">
+		<h2>小区租售</h2>
+	</div>
+<div class="cf">
+	<div class="cf">
+		<a class="btn" href="{:U('add')}">新 增</a>
+		<a class="btn ajax-post confirm" url="{:U('del')}" target-form="ids">删 除</a>
+	</div>
+
+
+	<!-- 高级搜索 -->
+	<div class="search-form fr cf">
+		<div class="sleft">
+			<input type="text" name="keywords" class="search-input" value="<?=isset($_GET['keywords'])?$_GET['keywords']:''?>" placeholder="请输入发布人姓名或标题">
+			<a class="sch-btn" href="javascript:;" id="search" url="/admin.php/Sale/index.html"><i class="btn-search"></i></a>
+		</div>
+	</div>
+</div>
+
+	<div class="data-table table-striped">
+		<table>
+			<thead>
+				<tr>
+					<th class="row-selected">
+						<input class="checkbox check-all" type="checkbox">
+					</th>
+					<th>报修单号</th>
+					<th>报修人</th>
+                    <th>电话</th>
+					<th>地址</th>
+					<th>问题</th>
+					<th>报修时间</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<notempty name="lists">
+				<volist name="lists" id="list">
+					<tr data-id="{$list.id}">
+						<td><input class="ids row-selected" type="checkbox" name="" id="" value="{$sale['id']}"> </td>
+						<td>{$list.sn}</td>
+						<td>{$list.name}</td>
+						<td>{$list.tel}</td>
+                        <td>{$list.address}</td>
+						<td>{$list.title}</td>
+						<td><?php echo date('Y-m-d h:i',$list['create_time'])?></td>
+						<td><?php echo $list['status'] ? '处理成功' :'未处理'?></td>
+						<td>
+							<a class="text-info" title="查看" href="{:U('detail',['id'=>$list['id']])}">查看详情</a>
+							<a title="删除" href="{:U('del',['id'=>$list['id']])}">删除</a>
+							<?=!$list['status'] ?'<a class="btn btn-info change_status"  href="javascript:;">接受处理</a>		' :'' ?>
+
+						</td>
+					</tr>
+				</volist>
+				<else/>
+				<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="result page">{$page}</div>
+
+</block>
+
+<block name="script">
+	<script src="/Public/static/thinkbox/jquery.thinkbox.js"></script>
+	<script type="text/javascript">
+        //搜索功能
+        $("#search").click(function(){
+            var url = $(this).attr('url');
+            var query  = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+            query = query.replace(/^&/g,'');
+            if( url.indexOf('?')>0 ){
+                url += '&' + query;
+            }else{
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function(e){
+            if(e.keyCode === 13){
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+       /* highlight_subnav('/admin.php/User/index.html');*/
+
+        //启用，禁用，删除，
+		$('.ajax-post:eq(0)').click(function(){/*启用*/
+		    tr = $('.row-selected:checked').closest('tr');
+		    ids =[];
+			tr.each(function(){
+				id = ($(this).find('td:eq(1)').text());
+                $.ajax({
+                    type:'POST',
+                    data:['id'+':'+id,'status:'+0],
+                    url: '__URL__/status.html	',
+                    async:true,
+                    dataType:'json',
+                    success:function(data){
+                        alert('成功发送')
+                    },
+                    error:function(){
+                        alert("没有成功发送")
+                    }
+
+                })
+            })
+
+		});
+
+		/*	报修状态处理*/
+        $('.change_status').click(function(){
+            var id = $(this).closest('tr').attr('data-id');
+            $.post("{:U('change_status')}",{'id':id},function(data){
+				if(data){
+				    alert('处理成功');
+				    window.location.reload();
+				}else{
+				    alert('处理失败');
+				}
+			});
+        });
+	</script>
+</block>

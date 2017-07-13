@@ -1,0 +1,76 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="/Public/static/uploadify/jquery.uploadify.min.js"></script>
+
+	<div class="main-title">
+		<h2>
+			新增报修
+		</h2>
+	</div>
+	<form action="{:U('add')}" method="post" class="form-horizontal">
+		<input type="hidden" name="pid" value="">
+		<div class="form-item">
+			<label class="item-label">姓名</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="name" value="">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">电话</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="tel" value="">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">地址</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="address" value="">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">标题(简述报修问题)</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="title" value="">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">内容<span class="check-tips">（详细叙述报修内容）</span></label>
+			<div class="controls textarea input-large">
+				<textarea name="content"></textarea>
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="id" value="">
+			<button class="btn submit-btn " id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+
+			<input type="hidden" name="parse" value="0">
+				<link rel="stylesheet" type="text/css" href="/Public/Admin/css/blue_color.css" media="all">
+
+				<link rel="stylesheet" href="/Public/static/kindeditor/default/default.css" />
+				<script charset="utf-8" src="/Public/static/kindeditor/kindeditor-min.js"></script>
+				<script charset="utf-8" src="/Public/static/kindeditor/zh_CN.js"></script>
+				<link href="/Public/static/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+
+				<link href="/Public/static/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+				<link href="/Public/static/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+				<script type="text/javascript" src="/Public/static/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+				<script type="text/javascript" src="/Public/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+						charset="UTF-8"></script>
+
+			</label>
+		</div>
+		</div>
+	</form>
+
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+</script>
+</block>
+
