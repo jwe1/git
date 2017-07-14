@@ -1,5 +1,6 @@
 <?php
 namespace Wechat\Controller;
+use Think\Verify;
 use User\Api\UserApi;
 
 /**
