@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit();?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -78,7 +79,7 @@
             <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                    <img class="verifyimg reloadverify" alt="点击切换" src="/index.php?s=/Home/Login/verify.html" onclick="this.src='/index.php?s=/Home/Login/verify.html'" style="cursor:pointer;">
+                    <img class="verifyimg reloadverify" alt="点击切换" src="<?php echo U('Home/Login/verify',array());?>" onclick="this.src='<?php echo U('Home/Login/verify',array());?>'" style="cursor:pointer;">
                 </div>
                 <div class="controls Validform_checktip text-warning"></div>
             </div>
